@@ -1,0 +1,36 @@
+[
+  {
+    "component": "package-info",
+    "componentPrimaryName": "",
+    "templateID": 804401,
+    "entities": [
+      {
+        "word": "20+30",
+        "wgID": 104401,
+        "wgName": "EXPRESSION",
+        "templateID": 804401,
+        "entityInfo": null,
+        "componentName": "package-info",
+        "entityType": "EXPRESSION",
+        "sourceID": "word",
+        "description": "expression",
+        "priority": 5,
+        "isEnabled": 1,
+        "keywordRequired": 0,
+        "primaryText": "NA",
+        "relevanceScore": 90,
+        "sourceValue": 0,
+        "index": 0,
+        "primaryID": "word"
+      }
+    ],
+    "query": "20+30",
+    "componentEnabled": true,
+    "keyword": [],
+    "disambiguationType": 1,
+    "time": "2026-10-26T06:23:17.362Z",
+    "quickView": 3,
+    "queryRegex": "(calculator )?(EXPRESSION)",
+    "componentType": "internal"
+  }
+]
