@@ -1,36 +1,45 @@
 [
   {
     "component": "package-info",
-    "componentPrimaryName": "",
+    "componentPrimaryName": "Package Intelligence",
     "templateID": 804401,
     "entities": [
       {
-        "word": "20+30",
-        "wgID": 104401,
-        "wgName": "EXPRESSION",
-        "templateID": 804401,
-        "entityInfo": null,
+        "word": "express",
+        "sourceID": "express",
+        "collectionName": "NPM_PACKAGES",
+        "collectionType": "HD_PACKAGES",
+        "entityInfo": {
+          "repository_url": "https://github.com/expressjs/express"
+        },
+        "relevanceScore": 99,
         "componentName": "package-info",
-        "entityType": "EXPRESSION",
-        "sourceID": "word",
-        "description": "expression",
-        "priority": 5,
-        "isEnabled": 1,
-        "keywordRequired": 0,
-        "primaryText": "NA",
-        "relevanceScore": 90,
-        "sourceValue": 0,
-        "index": 0,
-        "primaryID": "word"
+        "entityType": "HD_PACKAGES",
+        "description": "npm package",
+        "index": 0
+      },
+      {
+        "word": "fastify",
+        "sourceID": "fastify",
+        "collectionName": "NPM_PACKAGES",
+        "collectionType": "HD_PACKAGES",
+        "entityInfo": {
+          "repository_url": "https://github.com/fastify/fastify"
+        },
+        "relevanceScore": 98,
+        "componentName": "package-info",
+        "entityType": "HD_PACKAGES",
+        "description": "npm package",
+        "index": 1
       }
     ],
-    "query": "20+30",
+    "query": "compare packages express, fastify",
     "componentEnabled": true,
     "keyword": [],
-    "disambiguationType": 1,
+    "genericQuery": "compare packages HD_PACKAGES__NPM_PACKAGES, HD_PACKAGES__NPM_PACKAGES",
     "time": "2026-10-26T06:23:17.362Z",
-    "quickView": 3,
-    "queryRegex": "(calculator )?(EXPRESSION)",
+    "suggestedPlace": "mainline",
+    "queryRegex": "compare packages? HD_PACKAGES__NPM_PACKAGES, HD_PACKAGES__NPM_PACKAGES",
     "componentType": "internal"
   }
 ]

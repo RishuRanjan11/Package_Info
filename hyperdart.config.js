@@ -4,13 +4,38 @@ export default  {
 	// import name from package.json
 	name: pkg.name,
 	triggers: {
-		keywords: ['', '']
+		keywords: [
+			'npm',
+			'package info',
+			'packages like',
+			'compare packages',
+			'npm alternatives',
+			'best npm package',
+			'npm package for',
+			'library for',
+			'date formatting',
+			'package for',
+			'find package',
+			'recommend package',
+			'need package'
+		]
 		// in the future, we can add other types of triggers
 	},
 	query_format: {
 		regex: [
-			'',
-			''
+			'(npm( packages?)?|package info) HD_PACKAGES.NPM_PACKAGES',
+			'(latest|current) version of HD_PACKAGES.NPM_PACKAGES',
+			'compare( npm)?( packages?)? HD_PACKAGES.NPM_PACKAGES [v]?[0-9]+(\\.[0-9]+){0,2} (vs|versus) [v]?[0-9]+(\\.[0-9]+){0,2}',
+			'compare packages? .+',
+			'compare( packages?)? [@\\w][\\w./@-]*(,| vs| versus| and) ?[@\\w][\\w./@-]*(?:(,| vs| versus| and) ?[@\\w][\\w./@-]*)?',
+			'compare packages? HD_PACKAGES.NPM_PACKAGES, HD_PACKAGES.NPM_PACKAGES(, HD_PACKAGES.NPM_PACKAGES)?',
+			'compare( npm)?( packages?)? HD_PACKAGES.NPM_PACKAGES(,| vs| versus| and) HD_PACKAGES.NPM_PACKAGES((,| vs| versus| and) HD_PACKAGES.NPM_PACKAGES)?',
+			'(npm )?(alternatives?( to| for)|packages? (like|similar to)) HD_PACKAGES.NPM_PACKAGES( npm)?',
+			'(best (npm )?(package|library|module|tool)( for)?|npm (package|library|module|tool) for|library for|libraries for|package for) .+',
+			'(find|recommend|suggest|need|looking for) (an? )?(npm )?(package|library|module|tool|utility) .+',
+			'date formatting',
+			'npm .+',
+			'HD_PACKAGES.NPM_PACKAGES'
 		]
 		// in the future, we can add other types of query formats
 	},
@@ -36,6 +61,6 @@ export default  {
 	info: {
 		// key-values added here will be added to the compInfo section of searchData
 	},
-	github: "",
-	demovideo: ""
+	github: "https://github.com/RishuRanjan11/Package_Info",
+	demovideo: "https://youtu.be/c-YuHO-PGHs"
 }

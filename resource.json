@@ -1,81 +1,104 @@
 {
-  "title": "Generic Resource",
-  "description": "Provides structured information about any type of resource (e.g., products, vehicles, electronics, real estate, jobs). Fully generic and editable for custom domains.",
+  "title": "npm Package Intelligence",
+  "description": "Looks up npm package metadata, compares package versions, finds alternatives, and discovers packages for a described use case.",
+  "embeddingExamples": [
+    "npm express",
+    "latest version of react",
+    "compare packages express, fastify",
+    "compare express and fastify",
+    "compare express 4 vs 5",
+    "alternatives to moment",
+    "best npm package for date formatting"
+  ],
   "componentScope": {
     "supportedIntents": [
       {
-        "intent": "product-search",
-        "description": "Queries requesting specific products, categories, or inventory availability. Handles explicit items as well as feature-based searches (e.g., price ranges, specific years, subtypes).",
-        "example": [
-          "Show me gaming laptops under $1500.",
-          "Find SUVs from 2023 with a sunroof.",
-          "List studio apartments in downtown."
-        ]
+        "intent": "package-details",
+        "description": "Latest release, description, downloads, compatibility and deprecation details for a named npm package.",
+        "example": ["npm express", "latest version of react"]
+      },
+      {
+        "intent": "package-comparison",
+        "description": "Compare two or three named npm packages or explicit versions.",
+        "example": ["compare packages express, fastify", "compare express and fastify", "compare express 4 vs 5",         "compare packages express@4.21.2 and express@5.1.0"]
+      },
+      {
+        "intent": "package-alternatives",
+        "description": "Find related packages and their shared keywords and weekly downloads.",
+        "example": ["alternatives to moment", "packages like request"]
+      },
+      {
+        "intent": "use-case-discovery",
+        "description": "Search npm for packages matching a described development use case.",
+        "example": ["best npm package for date formatting", "library for parsing csv"]
       }
     ]
   },
   "schema": {
     "$defs": {
-      "categories": {
+      "packageName": {
         "type": "string",
-        "description": "High-level groups or classifications for the resource, e.g., 'Laptop', 'Car', 'Apartment'."
+        "description": "An npm package name, optionally followed by an explicit version such as express@4."
       },
-      "subtypes": {
+      "intent": {
         "type": "string",
-        "description": "Sub-categories or specific types within a category, e.g., 'Gaming Laptop', 'SUV', 'Studio Apartment'."
+        "enum": [
+          "package-details",
+          "package-comparison",
+          "package-alternatives",
+          "use-case-discovery"
+        ],
+        "description": "The requested package lookup action."
       },
-      "attributes": {
+      "feature": {
         "type": "string",
-        "description": "Attributes or properties of the resource that a user might query, e.g., 'price', 'color', 'size', 'year'."
-      },
-      "minMaxRange": {
-        "type": "object",
-        "description": "Numeric range filter for attributes, e.g., price, year, rating.",
-        "properties": {
-          "min": {
-            "type": "number",
-            "description": "Minimum value of the range."
-          },
-          "max": {
-            "type": "number",
-            "description": "Maximum value of the range."
-          }
-        }
+        "enum": ["metadata", "versions", "downloads", "compatibility", "alternatives"],
+        "description": "Package information requested by the user."
       }
     },
     "type": "object",
-    "description": "Main query object defining the resource request.",
+    "description": "Structured query for npm package details, comparisons, alternatives, or use-case discovery.",
     "properties": {
       "type": {
         "type": "string",
-        "description": "Kind of request: 'list' to retrieve multiple resources or 'query' for filtered data."
+        "enum": ["list", "query"],
+        "description": "Use query for named packages and list for package discovery."
       },
       "filters": {
         "type": "object",
-        "description": "Filters to narrow down resources by category, subtype, name, year, or numeric ranges.",
+        "description": "The requested action and package or development-use-case terms.",
         "properties": {
-          "category": { "$ref": "#/$defs/categories" },
-          "subtype": { "$ref": "#/$defs/subtypes" },
-          "name": {
+          "intent": {
+            "$ref": "#/$defs/intent"
+          },
+          "packages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/packageName"
+            },
+            "description": "One to three npm package names or version-qualified package references."
+          },
+          "packageName": {
+            "$ref": "#/$defs/packageName"
+          },
+          "useCase": {
             "type": "string",
-            "description": "Specific resource name or identifier."
-          },
-          "year": {
-            "type": "number",
-            "description": "Numeric attribute such as year, release year, or custom field."
-          },
-          "rangeFilters": { "$ref": "#/$defs/minMaxRange" }
+            "description": "A developer need to search for when no exact package is named."
+          }
         },
-        "additionalProperties": true
+        "required": ["intent"]
       },
       "features": {
         "type": "array",
-        "items": { "$ref": "#/$defs/attributes" }
+        "items": {
+          "$ref": "#/$defs/feature"
+        },
+        "description": "Package data the user wants to inspect."
       },
-      "entities":{
-        "collections":["collection_name_1"]
+      "entities": {
+        "collections": ["NPM_PACKAGES"]
       }
     },
-    "required": ["type", "filters", "features","entities"]
+    "required": ["type", "filters", "features", "entities"]
   }
 }

@@ -1,61 +1,25 @@
-# Generic Resource Schema
+# npm Package Intelligence Resource
 
-This schema provides a **fully generic structure** for querying any type of resource, such as cars, electronics, real estate, jobs, or products. It is designed as a **placeholder** that can be customized for your domain.  
+[`resource.json`](./resource.json) describes the structured request HyperDart can
+derive for this component. The user's original search remains available through
+the query in `searchData`; the structured request is supplied through
+`queryProps`.
 
-> **Important:** All fields, filters, categories, subtypes, attributes, and examples provided in this schema are **just for illustration purposes**. You should replace them with values that fit your specific resource or domain.
+## Query shape
 
-The schema includes:
+- `type`: `query` for named package details/comparisons or `list` for discovery.
+- `filters.intent`: `details`, `compare`, `alternatives`, or `discover`.
+- `filters.packages`: up to three npm package names or version-qualified package
+  references.
+- `filters.packageName`: the single package for details or alternatives.
+- `filters.useCase`: the development need for package discovery.
+- `features`: package information to inspect, such as metadata, versions,
+  downloads, compatibility, or alternatives.
+- `entities.collections`: `NPM_PACKAGES`, used to resolve mentioned package
+  names.
 
-- **Resource metadata** (title, description, example queries)
-- **Definitions (`$defs`)** for categories, subtypes, attributes, and numeric ranges
-- **Filters** to narrow down resources (all are example filters)
-- **Features** to specify which resource attributes to retrieve (all are example attributes)  
-
----
-
-## File: `resource.json`
-
-### Top-level fields
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `title` | string | Human-readable title of the resource. Example: `"Generic Resource"`. Can be customized. |
-| `description` | string | Explains the purpose of this resource schema and its usage. Edit as needed. |
-| `embeddingExamples` | array of strings | Example natural language queries the schema is designed to handle. Fully generic and **placeholder examples**, e.g., `"Show me resources with specific features."` |
-
----
-
-### `$defs` (Definitions)
-
-These are reusable definitions for filtering and features. **All examples here are placeholders and should be customized**:
-
-| Key | Type | Description |
-|-----|------|-------------|
-| `categories` | string | High-level groups of resources. Example placeholders: `"Laptop"`, `"Car"`, `"Apartment"`. Replace with your own categories. |
-| `subtypes` | string | Sub-categories within a category. Example placeholders: `"Gaming Laptop"`, `"SUV"`, `"Studio Apartment"`. Customize as needed. |
-| `attributes` | string | Properties of a resource the user may want to query or retrieve. Example placeholders: `"price"`, `"color"`, `"year"`. Replace with your own attributes. |
-| `minMaxRange` | object | Represents numeric range filters for attributes like price, year, size, or rating. <br>**Properties:** <br>`min` (number) – minimum value <br>`max` (number) – maximum value. These are examples and should be adjusted to your domain. |
-
----
-
-### Main Schema Object
-
-- **Type:** `object`  
-- **Description:** Represents a single resource query request. All field names and filters here are **examples and placeholders**.  
-
-#### Properties:
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `type` | string (enum: `list`, `query`) | Determines if the request is a **list** of resources or a filtered **query**. Example values; can be customized. |
-| `filters` | object | Filters to narrow down results by category, subtype, name, year, or numeric ranges. **All provided filters are examples** and should be customized. <br>**Properties:** <br>`category` – from `$defs.categories` <br>`subtype` – from `$defs.subtypes` <br>`name` – specific resource name <br>`year` – numeric attribute <br>`rangeFilters` – from `$defs.minMaxRange` <br>Supports additional custom filters via `additionalProperties`. |
-| `features` | array of strings | List of attributes the user wants to retrieve for each resource. Uses keys defined in `$defs.attributes`. **All example attributes are placeholders.** |
-
-#### Required Fields:
-
-- `type`
-- `filters`
-- `features`
-
----
-
+The component prioritizes the current raw `searchQuery` prop when supplied,
+then falls back to `searchData[0].query` and these structured fields. It only
+uses package entities from the `searchData` record whose query matches that
+current raw query, so entities from an earlier search cannot replace it. The
+local `searchData.json` file is a sandbox fixture, not a production data source.
